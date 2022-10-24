@@ -87,8 +87,8 @@ console.log('twoTimesBiggerCircles: ', twoTimesBiggerCircles);
 //   { r: 8,vcenter: [1, 1], common: { color: "#ff0000", id: "circle-2" } },
 //   { r: 12, center: [2, 2], common: { color: "#black", id: "circle-3" } }
 // ];
-// The "evaluate" methods just computes a result from the property value:
 const isValueBig = (x) => x >= 10;
+// The "evaluate" methods just computes a result from the property value:
 console.log('big radius:', radiusProp.evaluate(isValueBig)(circ1));
 //=> big radius: false
 // Use that function:

@@ -35,7 +35,7 @@ $ npm install ts-propper
 ## Examples
 
 ```ts
-import P from "ts-propper";
+import P from 'ts-propper';
 
 // Circle type:
 type Circle = {
@@ -51,13 +51,13 @@ type Circle = {
 const circ1: Circle = {
   r: 5,
   center: [1, 2],
-  common: { color: "#00ff00", id: "circle-1" },
+  common: {color: '#00ff00', id: 'circle-1'},
 };
 
 const circ2: Circle = {
   r: 4,
   center: [1, 1],
-  common: { color: "#ff0000", id: "circle-2" },
+  common: {color: '#ff0000', id: 'circle-2'},
 };
 //
 ```
@@ -68,24 +68,24 @@ const circ2: Circle = {
 
 // Radius lens of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
-const radiusProp = P.newInstance<Circle, number>("r");
+const radiusProp = P.newInstance<Circle, number>('r');
 
 // get radius property of some Circle object
 const r1 = radiusProp.view(circ1);
-console.log("r1:", r1);
+console.log('r1:', r1);
 //=> r1: 5
 const r2 = radiusProp.view(circ2);
-console.log("r2:", r2);
+console.log('r2:', r2);
 //=> r2: 4
 ```
 
 ```ts
 // We can also create a lens for an arbitrarily nested property of the object, using a dot notation:
-const colorProp = P.newInstance<Circle, string>("common.color");
+const colorProp = P.newInstance<Circle, string>('common.color');
 
 // get the color
 const c = colorProp.view(circ1);
-console.log("color:", c);
+console.log('color:', c);
 //=> color: #00ff00
 
 // Note: traditional Lenses use a functional composition to access a nested property.
@@ -94,29 +94,30 @@ console.log("color:", c);
 ```ts
 // Lens methods do not modify the object, they return its deep copy.
 // Here, the "set" method returns a deep copy of an object, with its property set to a new value:
-const greenCircle = colorProp.set("green")(circ1);
+const greenCircle = colorProp.set('green')(circ1);
 
-console.log("new obj color:", colorProp.view(greenCircle));
+console.log('new obj color:', colorProp.view(greenCircle));
 //=> new obj color: "green"
-console.log("old obj color:", colorProp.view(circ1));
+console.log('old obj color:', colorProp.view(circ1));
 //=> old obj color: "#00ff00"
 ```
 
 ```ts
 // The syntax of Propper's methods is functional friendly.
 //   Here, we set the same color to all circles, with ease:
-const darkCircles = [circ1, circ2].map(colorProp.set("black"));
+const darkCircles = [circ1, circ2].map(colorProp.set('black'));
 ```
 
 ```ts
 // The "over" method applies a function to the property:
-const twoTimesBiggerCircle = radiusProp.over((x) => 2 * x)(circ1);
+const twoTimesBiggerCircle = radiusProp.over(x => 2 * x)(circ1);
 ```
 
 ```ts
-// The "evaluate" methods just computes a result from the property value:
 const isValueBig = (x: number): boolean => x >= 10;
-console.log("big radius:", radiusProp.evaluate(isValueBig)(circ1));
+
+// The "evaluate" methods just computes a result from the property value:
+console.log('big radius:', radiusProp.evaluate(isValueBig)(circ1));
 //=> big radius: false
 ```
 
@@ -137,4 +138,4 @@ This strict property presence checking behavior is not as powerful as allowing P
 
 ---
 
-[1]: https://github.com/calmm-js/partial.lenses#readme "partial.lenses"
+[1]: https://github.com/calmm-js/partial.lenses#readme 'partial.lenses'
