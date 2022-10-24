@@ -1,0 +1,56 @@
+{
+  "name": "ts-propper",
+  "version": "0.1.0",
+  "description": "Simplified Lenses implementation, typed. Object property accessor. FP & OOP friendly. ",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "files": [
+    "build/src"
+  ],
+  "author": "Tomas Kraus <tomas.kraus.dev@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "prop",
+    "property",
+    "lens",
+    "accessor",
+    "wrapper",
+    "map",
+    "over",
+    "object",
+    "value",
+    "modify",
+    "immutable",
+    "ts",
+    "typescript",
+    "functional",
+    "fp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomaskraus/ts-propper.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "watch": "npx tsc --watch",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "devDependencies": {
+    "gts": "^3.1.1",
+    "typescript": "~4.7.0",
+    "@types/node": "^14.11.2",
+    "@types/dlv": "^1.1.2",
+    "@types/jest": "^28.1.6",
+    "ts-jest": "^28.0.7"
+  },
+  "dependencies": {
+    "dlv": "^1.1.3",
+    "klona": "^2.0.5"
+  }
+}
