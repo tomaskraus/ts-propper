@@ -89,6 +89,12 @@ const c = colorProp.view(circ1);
 console.log('color:', c);
 //=> color: #00ff00
 
+// It also works for array item property:
+//   Center point x-coord propper
+const centerXProp = P.newInstance<Circle, number>('center.0');
+console.log('cent x:', centerXProp.view(circ1));
+//=> cent x: 1
+
 // Note: traditional Lenses use a functional composition to access a nested property.
 ```
 
