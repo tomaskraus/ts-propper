@@ -34,16 +34,13 @@ const colorProp = index_1.default.newInstance('common.color');
 const c = colorProp.view(circ1);
 console.log('color:', c);
 //=> color: #00ff00
-// Note: traditional Lenses use a functional composition to access a nested property.
-//----------------------------------------------
-// Center point propper
-const centerProp = index_1.default.newInstance('center');
-// Center point x-coord propper (here, 1st index of the coordinate array)
-const centerXProp = index_1.default.newInstance('center.0'); // Composite property argument
-console.log('center:', centerProp.view(circ1));
-//=> center: [1, 2]
+// It also works for array item property:
+//   Center point x-coord lens
+const centerXProp = index_1.default.newInstance('center.0');
 console.log('cent x:', centerXProp.view(circ1));
 //=> cent x: 1
+// Note: traditional Lenses use a functional composition to access a nested property.
+//----------------------------------------------
 // Because;
 // Not so strict radius propper.
 //   Does not require whole Circle structure.
