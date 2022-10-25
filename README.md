@@ -10,20 +10,21 @@ For those who find the traditional (otherwise great) [Functional Lenses][1] impl
 - Well tested.
 - 100% code coverage.
 
-In a short, _Lens_ is basically a property accessor. Can read and manipulate the property it points (focuses) to. With immutability in mind.
+In a short, _Lens_ is basically a property accessor. Can read and manipulate the property it points (focuses) to.  
+With immutability in mind.
 
 ### With Lenses, you can:
 
-- Read object's property value.
-- Set object's property value.
-- Evaluate object's property value by calling a function over it.
-- Set object's property value by calling a function over the property.
+- **View** object's property value.
+- **Set** object's property value.
+- **Evaluate** object's property value by calling a function over it.
+- Set object's property value by calling a function **over** the property.
 
-Think of Lens as a "better getter/setter" layer that hides object's internal structure.
+Think of Lens as a "better getter/setter" layer that helps other code to not use the object's internal structure.
 
 ### Why use Lenses
 
-- _Immutable_. Instead modifying object's property, lens create a deep copy of that object, with new property value.
+- **Immutable**. Instead modifying object's property, lens create a deep copy of that object, with new property value.
 - Prevents property access logic duplication, whenever a property is used. If an object structure design is changed, the only things to be modified are Lenses for that object.
 
 ## Installation
@@ -127,14 +128,17 @@ Before accessing the object's property, Propper checks object's property for the
 
 This strict property presence checking behavior is not as powerful as allowing Propper to create new property of some object, on the fly. This behavior is a design decision, for two reasons:
 
-1. Removes sort of spelling errors: no magically-created new properties.
+1. Removes sort of spelling errors: no magically-created unwanted new properties.
 2. It is easier to implement (and understand) in a type safe way in TypeScript.
 
 ## Other Resources
 
-- [On Lenses in Javascript](https://dev.to/devinholloway/functional-lenses-in-javascript-with-ramda-4li7)
-- [partial.lenses][1]
-- [monocle-ts](https://github.com/gcanti/monocle-ts)
+- A short explanation of lenses:  
+  [On Lenses in Javascript](https://dev.to/devinholloway/functional-lenses-in-javascript-with-ramda-4li7)
+- Javascript lenses library:  
+  [partial.lenses][1]
+- TypeScript lenses library:  
+  [monocle-ts](https://github.com/gcanti/monocle-ts)
 
 ---
 
