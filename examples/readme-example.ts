@@ -2,7 +2,7 @@ import P from '../src/index';
 
 // Circle type:
 type Circle = {
-  r: number; //radius
+  r: number; // radius
   center: [x: number, y: number];
   common: {
     color: string;
