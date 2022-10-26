@@ -35,11 +35,11 @@ Think of Lens as a "better getter/setter" layer that helps other code to not use
 $ npm install ts-propper
 ```
 
-## Examples
+## Example
+
+Let's create some type and its instances first:
 
 ```ts
-import P from 'ts-propper';
-
 // Circle type:
 type Circle = {
   r: number; //radius
@@ -50,7 +50,7 @@ type Circle = {
   };
 };
 
-// Create some data:
+// Create some instances:
 const circ1: Circle = {
   r: 5,
   center: [1, 2],
@@ -65,9 +65,11 @@ const circ2: Circle = {
 //
 ```
 
+For every property of Circle type, we can create a Lens.
+That Lens then serves for an arbitrary number of Circle instances.
+
 ```ts
-// For every property of Circle type, we can create a Lens.
-// That Lens then serves for an arbitrary number of Circle instances.
+import P from 'ts-propper';
 
 // Radius lens of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
@@ -82,8 +84,9 @@ console.log('r2:', r2);
 //=> r2: 4
 ```
 
+We can also create a lens for an arbitrarily nested property of the object, using a dot notation:
+
 ```ts
-// We can also create a lens for an arbitrarily nested property of the object, using a dot notation:
 const colorProp = P.newInstance<Circle, string>('common.color');
 
 // get the color
@@ -100,9 +103,11 @@ console.log('cent x:', centerXProp.view(circ1));
 // Note: traditional Lenses use a functional composition to access a nested property.
 ```
 
+Lens methods do not modify the object, they return its deep copy.
+
+The **set** method returns a deep copy of an object, with its property set to a new value:
+
 ```ts
-// Lens methods do not modify the object, they return its deep copy.
-// Here, the "set" method returns a deep copy of an object, with its property set to a new value:
 const greenCircle = colorProp.set('green')(circ1);
 
 console.log('new obj color:', colorProp.view(greenCircle));
@@ -111,21 +116,24 @@ console.log('old obj color:', colorProp.view(circ1));
 //=> old obj color: "#00ff00"
 ```
 
+The syntax of Propper's methods is functional friendly.
+
 ```ts
-// The syntax of Propper's methods is functional friendly.
 //   Here, we set the same color to all circles, with ease:
 const darkCircles = [circ1, circ2].map(colorProp.set('black'));
 ```
 
+The **over** method applies a function to the property:
+
 ```ts
-// The "over" method applies a function to the property:
 const twoTimesBiggerCircle = radiusProp.over(x => 2 * x)(circ1);
 ```
+
+The **evaluate** method just computes a result from the property value:
 
 ```ts
 const isValueBig = (x: number): boolean => x >= 10;
 
-// The "evaluate" methods just computes a result from the property value:
 console.log('big radius:', radiusProp.evaluate(isValueBig)(circ1));
 //=> big radius: false
 ```

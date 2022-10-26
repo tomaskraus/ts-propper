@@ -1,4 +1,4 @@
-import P from '../src/index';
+// Let's create some type and its instance first:
 
 // Circle type:
 type Circle = {
@@ -26,6 +26,8 @@ const circ2: Circle = {
 
 // For every property of Circle type, we can create a Lens.
 // That Lens then serves for an arbitrary number of Circle instances.
+
+import P from '../src/index';
 
 // Radius lens of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
