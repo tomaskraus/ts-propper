@@ -1,3 +1,5 @@
+![build](https://github.com/tomaskraus/ts-propper/actions/workflows/node.js.yml/badge.svg)
+
 # ts-propper
 
 Simplified Lenses for TypeScript.
