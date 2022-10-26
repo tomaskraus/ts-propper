@@ -1,4 +1,5 @@
 ![build](https://github.com/tomaskraus/ts-propper/actions/workflows/node.js.yml/badge.svg)
+[![codecov](https://codecov.io/gh/tomaskraus/ts-propper/branch/main/graph/badge.svg?token=A1UMZ094D6)](https://codecov.io/gh/tomaskraus/ts-propper)
 
 # ts-propper
 
