@@ -1,9 +1,9 @@
 "use strict";
+// Let's create some type and its instance first:
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __importDefault(require("../src/index"));
 // Create some data:
 const circ1 = {
     r: 5,
@@ -18,6 +18,7 @@ const circ2 = {
 //
 // For every property of Circle type, we can create a Lens.
 // That Lens then serves for an arbitrary number of Circle instances.
+const index_1 = __importDefault(require("../src/index"));
 // Radius lens of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
 const radiusProp = index_1.default.newInstance('r');

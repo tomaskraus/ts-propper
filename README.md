@@ -3,7 +3,8 @@
 # ts-propper
 
 Simplified Lenses for TypeScript.
-For those who find the traditional (otherwise great) [Functional Lenses][1] implementation too overwhelming to start with.
+For those who find the traditional (otherwise great) [Functional Lenses][1] implementation too overwhelming to start with.  
+Unlike traditional Lenses, Propper's syntax is more object-oriented.
 
 - Easy to use.
 - Typed. With `d.ts` for Javascript.
