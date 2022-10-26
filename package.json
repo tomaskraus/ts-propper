@@ -32,7 +32,6 @@
   },
   "scripts": {
     "test": "jest",
-    "workflow": "jest --forceExit --detectOpenHandles",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
