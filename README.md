@@ -45,7 +45,7 @@ Typescript / ES module:
 import P from 'ts-propper';
 ```
 
-Javascript / CommonJS
+Javascript / CommonJS:
 
 ```js
 const P = require('ts-propper').default;
