@@ -188,7 +188,7 @@ unknownProp.set('something')(circ1);
 
 ### Less restrictive Propper
 
-This Propper will work on all Object having an 'r' property at the top-level, of type 'number'
+This Propper will work on all Objects having an 'r' property at the top-level, of type 'number':
 
 ```ts
 const justRProp = P.newInstance<{r: number}, number>('r');
