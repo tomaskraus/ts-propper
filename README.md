@@ -1,5 +1,6 @@
 ![build](https://github.com/tomaskraus/ts-propper/actions/workflows/node.js.yml/badge.svg)
 [![codecov](https://codecov.io/gh/tomaskraus/ts-propper/branch/main/graph/badge.svg?token=A1UMZ094D6)](https://codecov.io/gh/tomaskraus/ts-propper)
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 # ts-propper
 
