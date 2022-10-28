@@ -37,6 +37,20 @@ Think of Lens as a "better getter/setter" layer that helps other code to not use
 $ npm install ts-propper
 ```
 
+## Usage
+
+Typescript / ES module:
+
+```ts
+import P from 'ts-propper';
+```
+
+Javascript / CommonJS
+
+```js
+const P = require('ts-propper').default;
+```
+
 ## Example
 
 Let's create some type and its instances first:
