@@ -21,6 +21,13 @@ class Propper {
         this.accessPropPath = accessPropPath;
         this.accessPropPathElems = accessPropPath.split('.');
     }
+    /**
+     * Returns a new Propper instance.
+     * @typeParam TObj - Object type in which we want to access a property.
+     * @typeParam TProp - Type of property we ant to access.
+     * @param accessPropPath - Name of a property we want to access. Use dot notation to name a nested property.
+     * @returns New Propper instance.
+     */
     static newInstance(accessPropPath) {
         return new Propper(accessPropPath);
     }
