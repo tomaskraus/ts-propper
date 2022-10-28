@@ -163,6 +163,42 @@ This strict property presence checking behavior is not as powerful as allowing P
 1. Removes sort of spelling errors: no magically-created unwanted new properties.
 2. It is easier to implement (and understand) in a type safe way in TypeScript.
 
+## On Strictness
+
+You can define a Propper of unknown property of an Object:
+
+```ts
+const unknownProp = P.newInstance<Circle, number>('notThere');
+```
+
+The **view** methot of this Propper instance just returns _undefined_:
+
+```ts
+console.log('unknownProp value:', unknownProp.view(circ1));
+//=> unknownProp value: undefined
+```
+
+However, Propper's other methods raise an Error:
+
+```ts
+unknownProp.set('something')(circ1);
+// Error: Property with key path [notThere] not found at the object.
+```
+
+### Less restrictive Propper
+
+This Propper will work on all Object having an 'r' property at the top-level, of type 'number'
+
+```ts
+const justRProp = P.newInstance<{r: number}, number>('r');
+
+console.log(justRProp.view({r: 2}));
+//=> 2
+
+console.log(justRProp.set(100)(circ1).r);
+//=> 100
+```
+
 ## Other Resources
 
 - A short explanation of lenses:  
