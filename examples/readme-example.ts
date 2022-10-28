@@ -119,18 +119,43 @@ const isValueBig = (x: number): boolean => x >= 10;
 console.log('big radius:', radiusProp.evaluate(isValueBig)(circ1));
 //=> big radius: false
 
-// Use that function:
-const onlyBigCircles = twoTimesBiggerCircles.filter(
-  radiusProp.evaluate(isValueBig)
-);
-console.log('onlyBigCircles:', onlyBigCircles);
-//=> onlyBigCircles: [
-//   { r: 10, enter: [ 1, 2 ], common: { color: '#00ff00', id: 'circle-1' } },
-//   { r: 12, center: [ 2, 2 ], common: { color: '#black', id: 'circle-3' } }
-// ]
+// You can define a Propper of unknown property of an Object:
 
-// The same result, without the use of Propper:
-const onlyBigCircles2 = twoTimesBiggerCircles.filter(
-  (c: Circle) => isValueBig(c.r) // Without use of Propper, this line should be edited every time Circle type radius name or place is changed.
-);
-console.log('onlyBigCircles2:', onlyBigCircles2);
+const unknownProp = P.newInstance<Circle, string>('notThere');
+
+// The view methot of this Propper instance just returns undefined:
+console.log('unknownProp value:', unknownProp.view(circ1));
+//=> unknownProp value: undefined
+
+// However, Propper's other methods raise an Error:
+// unknownProp.set('something')(circ1);
+// Error: Property with key path [notThere] not found at the object.
+
+// unknownProp.set('hoo')({notThere: ''});
+
+// This Propper will work on all Object having an 'r' property at the top-level, of type 'number'
+const justRProp = P.newInstance<{r: number}, number>('r');
+
+console.log(justRProp.view({r: 2}));
+//=> 2
+
+console.log(justRProp.set(100)(circ1).r);
+//=> 100
+
+// -------------------------------------------------------------
+
+// Use that function:
+// const onlyBigCircles = twoTimesBiggerCircles.filter(
+//   radiusProp.evaluate(isValueBig)
+// );
+// console.log('onlyBigCircles:', onlyBigCircles);
+// //=> onlyBigCircles: [
+// //   { r: 10, enter: [ 1, 2 ], common: { color: '#00ff00', id: 'circle-1' } },
+// //   { r: 12, center: [ 2, 2 ], common: { color: '#black', id: 'circle-3' } }
+// // ]
+
+// // The same result, without the use of Propper:
+// const onlyBigCircles2 = twoTimesBiggerCircles.filter(
+//   (c: Circle) => isValueBig(c.r) // Without use of Propper, this line should be edited every time Circle type radius name or place is changed.
+// );
+// console.log('onlyBigCircles2:', onlyBigCircles2);
