@@ -194,44 +194,45 @@ describe('NewInstance', () => {
     expect(() => P.newInstance<TEmployee, number>('')).toThrow(/not specified/);
   });
 
-  // test('Throws an error if created with an empty accessProp array.', () => {
-  //   expect(() => P.newInstance<TEmployee, number>([])).toThrow(/not specified/);
-  // });
+  test('Throws an error if created with an empty accessProp array.', () => {
+    expect(() => P.newInstance<TEmployee, number>([])).toThrow(/not specified/);
+  });
 
-  // test('Accepts an array as accessProp path. Works for property name inacessible by dot notation', () => {
-  //   const emp = {name: 'Alice', 'salary.a': 1350};
-  //   const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>([
-  //     'salary.a',
-  //   ]);
-  //   const res = empSalaryProp.set(1000)(emp);
+  test('Accepts an array as accessProp path. Works for property name inaccessible by dot notation', () => {
+    const emp = {name: 'Alice', 'salary.a': 1350};
+    const empSalaryProp = P.newInstance<
+      {name: string; 'salary.a': number},
+      number
+    >(['salary.a']);
+    const res = empSalaryProp.set(1000)(emp);
 
-  //   expect(res).toEqual({
-  //     name: 'Alice',
-  //     salary: 1000,
-  //   });
-  //   expect(emp).toEqual({
-  //     name: 'Alice',
-  //     salary: 1350,
-  //   });
-  // });
+    expect(res).toEqual({
+      name: 'Alice',
+      'salary.a': 1000,
+    });
+    expect(emp).toEqual({
+      name: 'Alice',
+      'salary.a': 1350,
+    });
+  });
 
-  // test('Accepts an array as accessProp nested path.', () => {
-  //   const emp = {name: 'Alice', salary: {amount: 1550, currency: 'AUD'}};
-  //   const empSalaryProp = P.newInstance<TEmployee, number>([
-  //     'salary',
-  //     'amount',
-  //   ]);
-  //   const res = empSalaryProp.set(920)(emp);
+  test('Accepts an array for a nested accessProp path.', () => {
+    const emp = {name: 'Alice', salary: {amount: 1550, currency: 'AUD'}};
+    const empSalaryProp = P.newInstance<TEmployee, number>([
+      'salary',
+      'amount',
+    ]);
+    const res = empSalaryProp.set(920)(emp);
 
-  //   expect(res).toEqual({
-  //     name: 'Alice',
-  //     salary: {amount: 920, currency: 'AUD'},
-  //   });
-  //   expect(emp).toEqual({
-  //     name: 'Alice',
-  //     salary: {amount: 1550, currency: 'AUD'},
-  //   });
-  // });
+    expect(res).toEqual({
+      name: 'Alice',
+      salary: {amount: 920, currency: 'AUD'},
+    });
+    expect(emp).toEqual({
+      name: 'Alice',
+      salary: {amount: 1550, currency: 'AUD'},
+    });
+  });
 });
 
 describe('evaluate', () => {

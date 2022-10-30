@@ -57,7 +57,7 @@ export default class Propper<TObj extends object, TProp> implements IPropper<TOb
      * @param accessPropPath - Name of a property we want to access. Use dot notation to name a nested property.
      * @returns New Propper instance.
      */
-    static newInstance<TObj extends object, TProp>(accessPropPath: string): Propper<TObj, TProp>;
+    static newInstance<TObj extends object, TProp>(accessPropPath: string | string[]): Propper<TObj, TProp>;
     view: <T extends TObj>(obj: T) => TProp | undefined;
     private getAssertedAccessProp;
     set<T extends TObj>(value: TProp): (obj: T) => T;

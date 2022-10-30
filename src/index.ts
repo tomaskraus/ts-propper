@@ -1,5 +1,4 @@
 import delve from 'dlv';
-import {access} from 'fs';
 import {klona} from 'klona';
 
 /**
@@ -66,7 +65,7 @@ export default class Propper<TObj extends object, TProp>
 
   // TODO: add array string option
   // TODO: add empty accessPropPath check
-  private constructor(accessPropPath: string | [string]) {
+  private constructor(accessPropPath: string | string[]) {
     if (typeof accessPropPath === 'string') {
       this.accessPropPathStr = accessPropPath;
       this.accessPropPathElems = accessPropPath.split('.');
@@ -86,7 +85,9 @@ export default class Propper<TObj extends object, TProp>
    * @param accessPropPath - Name of a property we want to access. Use dot notation to name a nested property.
    * @returns New Propper instance.
    */
-  static newInstance<TObj extends object, TProp>(accessPropPath: string) {
+  static newInstance<TObj extends object, TProp>(
+    accessPropPath: string | string[]
+  ) {
     return new Propper<TObj, TProp>(accessPropPath);
   }
 
