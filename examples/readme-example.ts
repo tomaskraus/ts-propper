@@ -58,7 +58,7 @@ console.log('cent x:', centerXProp.view(circ1));
 // Note: traditional Lenses use a functional composition to access a nested property.
 
 // We can specify (possibly nested) path using an array of keys.
-// Also, using array in a Lens creation, we can address a property innaccesible by a dot notation.
+// Also, using array in a Lens creation, we can address a property inaccessible by a dot notation.
 
 const colorProp2 = P.newInstance<Circle, string>(['common', 'color']);
 
