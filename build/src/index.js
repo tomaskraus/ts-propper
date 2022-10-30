@@ -36,7 +36,7 @@ class Propper {
      * Returns a new Propper instance.
      * @typeParam TObj - Object type in which we want to access a property.
      * @typeParam TProp - Type of property we ant to access.
-     * @param accessPropPath - Name of a property we want to access. Use dot notation to name a nested property.
+     * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
      * @returns New Propper instance.
      */
     static newInstance(accessPropPath) {
