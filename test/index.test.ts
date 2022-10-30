@@ -106,7 +106,7 @@ describe('view', () => {
     expect(res).toBeUndefined();
   });
 
-  test('Map: view nested value correctly.', () => {
+  test('Higher order func: view nested value correctly.', () => {
     const emps = [
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
@@ -174,7 +174,7 @@ describe('set', () => {
     });
   });
 
-  test('Map: set nested value correctly.', () => {
+  test('Higher order func: set nested value correctly.', () => {
     const emps = [
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
