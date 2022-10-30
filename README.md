@@ -120,6 +120,13 @@ console.log('cent x:', centerXProp.view(circ1));
 // Note: traditional Lenses use a functional composition to access a nested property.
 ```
 
+We cannot create a Lens without telling its name:
+
+```ts
+const noProp = P.newInstance<Circle, number>('');
+//raises Error
+```
+
 Lens methods do not modify the object, they return its deep copy.
 
 The **set** method returns a deep copy of an object, with its property set to a new value:

@@ -47,7 +47,7 @@ interface IPropper<TObj extends object, TProp> {
     over<T extends TObj>(fn: (x: TProp, index?: number) => TProp): (y: T, index?: number) => T;
 }
 export default class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
-    private accessPropPath;
+    private accessPropPathStr;
     private accessPropPathElems;
     private constructor();
     /**

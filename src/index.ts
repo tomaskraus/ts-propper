@@ -1,4 +1,5 @@
 import delve from 'dlv';
+import {access} from 'fs';
 import {klona} from 'klona';
 
 /**
@@ -60,12 +61,22 @@ interface IPropper<TObj extends object, TProp> {
 export default class Propper<TObj extends object, TProp>
   implements IPropper<TObj, TProp>
 {
-  private accessPropPath: string;
+  private accessPropPathStr: string;
   private accessPropPathElems: string[];
 
-  private constructor(accessPropPath: string) {
-    this.accessPropPath = accessPropPath;
-    this.accessPropPathElems = accessPropPath.split('.');
+  // TODO: add array string option
+  // TODO: add empty accessPropPath check
+  private constructor(accessPropPath: string | [string]) {
+    if (typeof accessPropPath === 'string') {
+      this.accessPropPathStr = accessPropPath;
+      this.accessPropPathElems = accessPropPath.split('.');
+    } else {
+      this.accessPropPathStr = accessPropPath.join('.');
+      this.accessPropPathElems = accessPropPath;
+    }
+    if (this.accessPropPathStr === '') {
+      throw new Error('Property path not specified!');
+    }
   }
 
   /**
@@ -88,7 +99,7 @@ export default class Propper<TObj extends object, TProp>
     const p: TProp | undefined = this.view(obj);
     if (typeof p === 'undefined') {
       throw new Error(
-        `Property with key path [${this.accessPropPath}] not found at the object.`
+        `Property with key path [${this.accessPropPathStr}] not found at the object.`
       );
     }
     return p;

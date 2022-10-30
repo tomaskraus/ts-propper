@@ -41,6 +41,8 @@ const centerXProp = index_1.default.newInstance('center.0');
 console.log('cent x:', centerXProp.view(circ1));
 //=> cent x: 1
 // Note: traditional Lenses use a functional composition to access a nested property.
+// We cannot create a Lens without telling its name:
+const noProp = index_1.default.newInstance('');
 //----------------------------------------------
 // Because;
 // Not so strict radius propper.

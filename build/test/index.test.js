@@ -63,7 +63,7 @@ describe('view', () => {
         const res = empSalaryProp.view(emp);
         expect(res).toBeUndefined();
     });
-    test('Map: view nested value correctly.', () => {
+    test('Higher order func: view nested value correctly.', () => {
         const emps = [
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
@@ -118,7 +118,7 @@ describe('set', () => {
             salary: { amount: 1450, currency: 'AUD' },
         });
     });
-    test('Map: set nested value correctly.', () => {
+    test('Higher order func: set nested value correctly.', () => {
         const emps = [
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
@@ -130,6 +130,45 @@ describe('set', () => {
             { name: 'Bob', salary: { amount: 800, currency: 'AUD' } },
         ]);
     });
+});
+describe('NewInstance', () => {
+    test('Throws an error if created with an empty accessProp string.', () => {
+        expect(() => index_1.default.newInstance('')).toThrow(/not specified/);
+    });
+    // test('Throws an error if created with an empty accessProp array.', () => {
+    //   expect(() => P.newInstance<TEmployee, number>([])).toThrow(/not specified/);
+    // });
+    // test('Accepts an array as accessProp path. Works for property name inacessible by dot notation', () => {
+    //   const emp = {name: 'Alice', 'salary.a': 1350};
+    //   const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>([
+    //     'salary.a',
+    //   ]);
+    //   const res = empSalaryProp.set(1000)(emp);
+    //   expect(res).toEqual({
+    //     name: 'Alice',
+    //     salary: 1000,
+    //   });
+    //   expect(emp).toEqual({
+    //     name: 'Alice',
+    //     salary: 1350,
+    //   });
+    // });
+    // test('Accepts an array as accessProp nested path.', () => {
+    //   const emp = {name: 'Alice', salary: {amount: 1550, currency: 'AUD'}};
+    //   const empSalaryProp = P.newInstance<TEmployee, number>([
+    //     'salary',
+    //     'amount',
+    //   ]);
+    //   const res = empSalaryProp.set(920)(emp);
+    //   expect(res).toEqual({
+    //     name: 'Alice',
+    //     salary: {amount: 920, currency: 'AUD'},
+    //   });
+    //   expect(emp).toEqual({
+    //     name: 'Alice',
+    //     salary: {amount: 1550, currency: 'AUD'},
+    //   });
+    // });
 });
 describe('evaluate', () => {
     test('Evaluates value correctly. Does not modify the original object.', () => {

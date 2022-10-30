@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dlv_1 = __importDefault(require("dlv"));
 const klona_1 = require("klona");
 class Propper {
+    // TODO: add array string option
+    // TODO: add empty accessPropPath check
     constructor(accessPropPath) {
         this.view = (obj) => {
             const res = (0, dlv_1.default)(obj, this.accessPropPathElems);
@@ -14,12 +16,21 @@ class Propper {
         this.getAssertedAccessProp = (obj) => {
             const p = this.view(obj);
             if (typeof p === 'undefined') {
-                throw new Error(`Property with key path [${this.accessPropPath}] not found at the object.`);
+                throw new Error(`Property with key path [${this.accessPropPathStr}] not found at the object.`);
             }
             return p;
         };
-        this.accessPropPath = accessPropPath;
-        this.accessPropPathElems = accessPropPath.split('.');
+        if (typeof accessPropPath === 'string') {
+            this.accessPropPathStr = accessPropPath;
+            this.accessPropPathElems = accessPropPath.split('.');
+        }
+        else {
+            this.accessPropPathStr = accessPropPath.join('.');
+            this.accessPropPathElems = accessPropPath;
+        }
+        if (this.accessPropPathStr === '') {
+            throw new Error('Property path not specified!');
+        }
     }
     /**
      * Returns a new Propper instance.
