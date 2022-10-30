@@ -1,6 +1,6 @@
 {
   "name": "ts-propper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplified Lenses implementation, typed. Object property accessor. FP & OOP friendly. ",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
