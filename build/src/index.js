@@ -39,7 +39,7 @@ class Propper {
      * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
      * @returns New Propper instance.
      */
-    static newInstance(accessPropPath) {
+    static createPropper(accessPropPath) {
         return new Propper(accessPropPath);
     }
     set(value) {
@@ -66,5 +66,5 @@ class Propper {
         };
     }
 }
-exports.default = Propper;
+exports.default = Propper.createPropper;
 //# sourceMappingURL=index.js.map

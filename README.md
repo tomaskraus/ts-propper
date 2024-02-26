@@ -6,31 +6,30 @@
 
 Simplified Lenses for TypeScript.
 For those who find the traditional (otherwise great) [Functional Lenses][1] implementation too overwhelming to start with.  
-Unlike traditional Lenses, Propper's syntax is more object-oriented.
 
 - Easy to use.
 - Typed. With `d.ts` for Javascript.
-- Object-oriented & Functional programming friendly.
+- Functional programming friendly.
 - Immutable.
 - Well tested.
 - 100% code coverage.
 
-In a short, _Lens_ is basically a property accessor. Can read and manipulate the property it points (focuses) to.  
+In a short, _propper_ is basically a property accessor. Can read and manipulate the property it points (focuses) to.  
 With immutability in mind.
 
-### With Lenses, you can:
+### With _propper_, you can:
 
 - **View** object's property value.
 - **Set** object's property value.
 - **Evaluate** object's property value by calling a function over it.
 - Set object's property value by calling a function **over** the property.
 
-Think of Lens as a "better getter/setter" layer that helps other code to not use the object's internal structure.
+Think of _propper_ as a "better getter/setter" layer that helps other code to not use the object's internal structure.
 
-### Why use Lenses
+### Why use _propper_
 
-- **Immutable**. Instead modifying object's property, lens create a deep copy of that object, with new property value.
-- Prevents property access logic duplication, whenever a property is used. If an object structure design is changed, the only things to be modified are Lenses for that object.
+- **Immutable**. Instead modifying object's property, _propper_ create a deep copy of that object, with new property value.
+- Prevents property access logic duplication, whenever a property is used. If an object structure design is changed, the only things to be modified in your code are _proppers_ for that object.
 
 ## Installation
 
@@ -40,19 +39,22 @@ $ npm install ts-propper
 
 ## Usage
 
-Typescript / ES module:
-
-```ts
-import P from 'ts-propper';
-```
-
 Javascript / CommonJS:
 
 ```js
-const P = require('ts-propper').default;
+const createPropper = require('ts-propper').default;
 ```
 
+Typescript / ES module:
+
+```ts
+import createPropper from 'ts-propper';
+```
+
+
 ## Example
+
+> **NOTE:** for a javascript example, see [js-example](./examples/js-example.js)
 
 Let's create some type and its instances first:
 
@@ -82,67 +84,67 @@ const circ2: Circle = {
 //
 ```
 
-For every property of Circle type, we can create a Lens.
-That Lens then serves for an arbitrary number of Circle instances.
+For every property of Circle type, we can create a _propper_.
+That _propper_ then serves for an arbitrary number of Circle instances.
 
 ```ts
-import P from 'ts-propper';
+import createPropper from 'ts-propper';
 
-// Radius lens of a Circle type and its subtypes:
+// Radius propper of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
-const radiusProp = P.newInstance<Circle, number>('r');
+const radiusPropper = createPropper<Circle, number>('r');
 
-// get radius property of some Circle object
-const r1 = radiusProp.view(circ1);
+// get radius
+const r1 = radiusPropper.view(circ1);
 console.log('r1:', r1);
 //=> r1: 5
-const r2 = radiusProp.view(circ2);
+const r2 = radiusPropper.view(circ2);
 console.log('r2:', r2);
 //=> r2: 4
 ```
 
-We can also create a lens for an arbitrarily nested property of the object, using a dot notation:
+We can also create a _propper_ for an arbitrarily nested property of the object, using a dot notation:
 
 ```ts
-const colorProp = P.newInstance<Circle, string>('common.color');
+const colorPropper = createPropper<Circle, string>('common.color');
 
 // get the color
-const c = colorProp.view(circ1);
+const c = colorPropper.view(circ1);
 console.log('color:', c);
 //=> color: #00ff00
 
 // It also works for array item property:
-//   Center point x-coord lens
-const centerXProp = P.newInstance<Circle, number>('center.0');
-console.log('cent x:', centerXProp.view(circ1));
+//   Center point x-coord propper
+const centerXPropper = createPropper<Circle, number>('center.0');
+console.log('cent x:', centerXPropper.view(circ1));
 //=> cent x: 1
 
 // Note: traditional Lenses use a functional composition to access a nested property.
 ```
 
 We can specify (possibly nested) path using an array of keys.  
-Also, using array in a Lens creation, we can address a property inaccessible by a dot notation.
+Also, using array in a _propper_ creation, we can address a property inaccessible by a dot notation.
 
 ```ts
-const colorProp2 = P.newInstance<Circle, string>(['common', 'color']);
+const colorPropper2 = createPropper<Circle, string>(['common', 'color']);
 
 // get the color
-const c2 = colorProp2.view(circ1);
+const c2 = colorPropper2.view(circ1);
 console.log('color:', c2);
 //=> color: #00ff00
 ```
 
-We cannot create a Lens without telling its property name:
+We cannot create a _propper_ without telling its property name:
 
 ```ts
-const noProp = P.newInstance<Circle, number>('');
+const noProp = createPropper<Circle, number>('');
 //raises Error
 
-const noProp2 = P.newInstance<Circle, number>([]);
+const noProp2 = createPropper<Circle, number>([]);
 //raises Error
 ```
 
-Lens methods do not modify the object, they return its deep copy.
+Propper's methods do not modify the object, they return its deep copy.
 
 The **set** method returns a deep copy of an object, with its property set to a new value:
 
@@ -158,14 +160,14 @@ console.log('old obj color:', colorProp.view(circ1));
 The syntax of Propper's methods is functional friendly.
 
 ```ts
-//   Here, we set the same color to all circles, with ease:
-const darkCircles = [circ1, circ2].map(colorProp.set('black'));
+const darkCircles = [circ1, circ2].map(colorPropper.set('black'));
+console.log('dark circles:', darkCircles);
 ```
 
 The **over** method applies a function to the property:
 
 ```ts
-const twoTimesBiggerCircle = radiusProp.over(x => 2 * x)(circ1);
+const twoTimesBiggerCircle = radiusPropper.over(x => 2 * x)(circ1);
 ```
 
 The **evaluate** method just computes a result from the property value:
@@ -173,7 +175,7 @@ The **evaluate** method just computes a result from the property value:
 ```ts
 const isValueBig = (x: number): boolean => x >= 10;
 
-console.log('big radius:', radiusProp.evaluate(isValueBig)(circ1));
+console.log('big radius:', radiusPropper.evaluate(isValueBig)(circ1));
 //=> big radius: false
 ```
 
@@ -191,35 +193,36 @@ This strict property presence checking behavior is not as powerful as allowing P
 You can define a Propper of unknown property of an Object:
 
 ```ts
-const unknownProp = P.newInstance<Circle, number>('notThere');
+const unknownPropper = createPropper<Circle, string>('notThere');
 ```
 
 The **view** methot of this Propper instance just returns _undefined_:
 
 ```ts
-console.log('unknownProp value:', unknownProp.view(circ1));
-//=> unknownProp value: undefined
+console.log('unknownPropper value:', unknownPropper.view(circ1));
+//=> unknownPropper value: undefined
 ```
 
 However, Propper's other methods raise an Error:
 
 ```ts
-unknownProp.set('something')(circ1);
+unknownPropper.set('something')(circ1);
 // Error: Property with key path [notThere] not found at the object.
 ```
 
-### Less restrictive Propper
+### A less restrictive Propper
 
-This Propper will work on all Objects having an 'r' property at the top-level, of type 'number':
+This Propper will work on all Objects having an 'r' property of type 'number', at the top-level of that object:
 
 ```ts
-const justRProp = P.newInstance<{r: number}, number>('r');
+const justRPropper = createPropper<{r: number}, number>('r');
 
-console.log(justRProp.view({r: 2}));
+console.log(justRPropper.set(100)(circ1).r);
+//=> 100
+
+console.log(justRPropper.view({r: 2}));   // You see? Works with the {r: 2} object
 //=> 2
 
-console.log(justRProp.set(100)(circ1).r);
-//=> 100
 ```
 
 ## Other Resources

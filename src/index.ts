@@ -57,9 +57,7 @@ interface IPropper<TObj extends object, TProp> {
   ): (y: T, index?: number) => T;
 }
 
-export default class Propper<TObj extends object, TProp>
-  implements IPropper<TObj, TProp>
-{
+class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
   private accessPropPathStr: string;
   private accessPropPathElems: string[];
 
@@ -85,7 +83,7 @@ export default class Propper<TObj extends object, TProp>
    * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
    * @returns New Propper instance.
    */
-  static newInstance<TObj extends object, TProp>(
+  static createPropper<TObj extends object, TProp>(
     accessPropPath: string | string[]
   ) {
     return new Propper<TObj, TProp>(accessPropPath);
@@ -135,3 +133,5 @@ export default class Propper<TObj extends object, TProp>
     };
   }
 }
+
+export default Propper.createPropper;

@@ -7,29 +7,29 @@ const index_1 = __importDefault(require("../src/index"));
 describe('view', () => {
     test('Views the value correctly.', () => {
         const emp = { name: 'Alice', salary: 1200 };
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const res = empSalaryProp.view(emp);
         expect(res).toEqual(1200);
     });
     test('Views the value from an object literal correctly.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const res = empSalaryProp.view({ name: 'Alice', salary: 1200 });
         expect(res).toEqual(1200);
     });
     test('Returns undefined for an unknown property.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary1');
+        const empSalaryProp = (0, index_1.default)('salary1');
         const res = empSalaryProp.view({ name: 'Alice', salary: 1200 });
         expect(res).toBeUndefined();
     });
     test('Views nested property value correctly.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = empSalaryProp.view(emp);
         expect(res).toEqual(1450);
     });
     test('Views nested non-existent value as undefined.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary.amount2');
+        const empSalaryProp = (0, index_1.default)('salary.amount2');
         const res = empSalaryProp.view(emp);
         expect(res).toBeUndefined();
     });
@@ -41,7 +41,7 @@ describe('view', () => {
                 { amount: 1650, currency: 'AUD' },
             ],
         };
-        const emp2ndSalaryProp = index_1.default.newInstance('salaries.1.amount');
+        const emp2ndSalaryProp = (0, index_1.default)('salaries.1.amount');
         const res = emp2ndSalaryProp.view(emp);
         expect(res).toEqual(1650);
     });
@@ -53,13 +53,13 @@ describe('view', () => {
                 { amount: 1650, currency: 'AUD' },
             ],
         };
-        const empSalaryProp = index_1.default.newInstance('salaries.2.amount');
+        const empSalaryProp = (0, index_1.default)('salaries.2.amount');
         const res = empSalaryProp.view(emp);
         expect(res).toBeUndefined();
     });
     test('Views nested non-existent value as undefined.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary.price.a');
+        const empSalaryProp = (0, index_1.default)('salary.price.a');
         const res = empSalaryProp.view(emp);
         expect(res).toBeUndefined();
     });
@@ -68,7 +68,7 @@ describe('view', () => {
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
         ];
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = emps.map(empSalaryProp.view);
         expect(res).toEqual([1450, 1200]);
     });
@@ -76,7 +76,7 @@ describe('view', () => {
 describe('set', () => {
     test('Sets the value to the prop. Does not modify the original object.', () => {
         const emp = { name: 'Alice', salary: 1450 };
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const res = empSalaryProp.set(1000)(emp);
         expect(res).toEqual({
             name: 'Alice',
@@ -89,7 +89,7 @@ describe('set', () => {
     });
     test('Sets the value to the nested prop. Does not modify the original object.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = empSalaryProp.set(900)(emp);
         expect(res).toEqual({
             name: 'Alice',
@@ -102,7 +102,7 @@ describe('set', () => {
     });
     test('Throws an error if attempts to set the value to a non-existent prop.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary2');
+        const empSalaryProp = (0, index_1.default)('salary2');
         expect(() => empSalaryProp.set(1000)(emp)).toThrow(/not found/);
         expect(emp).toEqual({
             name: 'Alice',
@@ -111,7 +111,7 @@ describe('set', () => {
     });
     test('Throws error if attempts to set the value to a non-existent nested prop.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary.price');
+        const empSalaryProp = (0, index_1.default)('salary.price');
         expect(() => empSalaryProp.set(1000)(emp)).toThrow(/not found/);
         expect(emp).toEqual({
             name: 'Alice',
@@ -123,7 +123,7 @@ describe('set', () => {
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
         ];
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = emps.map(empSalaryProp.set(800));
         expect(res).toEqual([
             { name: 'Alice', salary: { amount: 800, currency: 'AUD' } },
@@ -133,14 +133,14 @@ describe('set', () => {
 });
 describe('NewInstance', () => {
     test('Throws an error if created with an empty accessProp string.', () => {
-        expect(() => index_1.default.newInstance('')).toThrow(/not specified/);
+        expect(() => (0, index_1.default)('')).toThrow(/not specified/);
     });
     test('Throws an error if created with an empty accessProp array.', () => {
-        expect(() => index_1.default.newInstance([])).toThrow(/not specified/);
+        expect(() => (0, index_1.default)([])).toThrow(/not specified/);
     });
     test('Accepts an array as accessProp path. Works for property name inaccessible by dot notation', () => {
         const emp = { name: 'Alice', 'salary.a': 1350 };
-        const empSalaryProp = index_1.default.newInstance(['salary.a']);
+        const empSalaryProp = (0, index_1.default)(['salary.a']);
         const res = empSalaryProp.set(1000)(emp);
         expect(res).toEqual({
             name: 'Alice',
@@ -153,7 +153,7 @@ describe('NewInstance', () => {
     });
     test('Accepts an array for a nested accessProp path.', () => {
         const emp = { name: 'Alice', salary: { amount: 1550, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance([
+        const empSalaryProp = (0, index_1.default)([
             'salary',
             'amount',
         ]);
@@ -170,7 +170,7 @@ describe('NewInstance', () => {
 });
 describe('evaluate', () => {
     test('Evaluates value correctly. Does not modify the original object.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const emp = {
             name: 'Alice',
             salary: 1200,
@@ -184,12 +184,12 @@ describe('evaluate', () => {
     });
     test('Evaluates value correctly when an index argument is provided.', () => {
         const emp = { name: 'Alice', salary: 1200 };
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const res = empSalaryProp.evaluate((x, i) => `${i}.${x}`)(emp, 10);
         expect(res).toEqual('10.1200');
     });
     test('Evaluates a nested value correctly.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = empSalaryProp.evaluate(x => x * 2)({
             name: 'Alice',
             salary: { amount: 1450, currency: 'AUD' },
@@ -197,7 +197,7 @@ describe('evaluate', () => {
         expect(res).toEqual(2900);
     });
     test('Throws an error when evaluates the non-existent prop.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary.amount.price');
+        const empSalaryProp = (0, index_1.default)('salary.amount.price');
         expect(() => empSalaryProp.evaluate(x => x * 2)({
             name: 'Alice',
             salary: { amount: 1450, currency: 'AUD' },
@@ -208,14 +208,14 @@ describe('evaluate', () => {
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
         ];
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = emps.map(empSalaryProp.evaluate(x => x > 1300));
         expect(res).toEqual([true, false]);
     });
 });
 describe('over', () => {
     test('Overs value correctly. Does not modify the original object.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const emp1 = { name: 'Alice', salary: 1200 };
         const emp2 = empSalaryProp.over(x => x * 2)(emp1);
         expect(emp2).toEqual({ name: 'Alice', salary: 2400 });
@@ -223,13 +223,13 @@ describe('over', () => {
     });
     test('Overs value correctly when an index argument is provided.', () => {
         const emp = { name: 'Alice', salary: 1200 };
-        const empSalaryProp = index_1.default.newInstance('salary');
+        const empSalaryProp = (0, index_1.default)('salary');
         const res = empSalaryProp.over((x, i) => x + (i ? 10 * i : 0))(emp, 10);
         expect(res).toEqual({ name: 'Alice', salary: 1300 });
     });
     test('Throws an error when overs to the non-existent prop.', () => {
         const emp = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
-        const empSalaryProp = index_1.default.newInstance('salary2');
+        const empSalaryProp = (0, index_1.default)('salary2');
         expect(() => empSalaryProp.over(x => x + 100)(emp)).toThrow(/not found/);
         expect(emp).toEqual({
             name: 'Alice',
@@ -237,7 +237,7 @@ describe('over', () => {
         });
     });
     test('Overs a nested value correctly. Does not modify the original object.', () => {
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const emp1 = { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } };
         const emp2 = empSalaryProp.over(x => x * 2)(emp1);
         expect(emp2).toEqual({
@@ -254,7 +254,7 @@ describe('over', () => {
             { name: 'Alice', salary: { amount: 1450, currency: 'AUD' } },
             { name: 'Bob', salary: { amount: 1200, currency: 'AUD' } },
         ];
-        const empSalaryProp = index_1.default.newInstance('salary.amount');
+        const empSalaryProp = (0, index_1.default)('salary.amount');
         const res = emps.map(empSalaryProp.over(x => x * 2));
         expect(res).toEqual([
             { name: 'Alice', salary: { amount: 2900, currency: 'AUD' } },

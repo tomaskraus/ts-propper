@@ -1,4 +1,4 @@
-import P from '../src/index';
+import createPropper from '../src/index';
 
 interface TEmployeeWithSimpleSalary {
   name: string;
@@ -23,7 +23,7 @@ interface TEmployeeWithMultipleSalaries {
 describe('view', () => {
   test('Views the value correctly.', () => {
     const emp = {name: 'Alice', salary: 1200};
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const res = empSalaryProp.view(emp);
@@ -32,7 +32,7 @@ describe('view', () => {
   });
 
   test('Views the value from an object literal correctly.', () => {
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const res = empSalaryProp.view({name: 'Alice', salary: 1200});
@@ -41,7 +41,7 @@ describe('view', () => {
   });
 
   test('Returns undefined for an unknown property.', () => {
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary1'
     );
     const res = empSalaryProp.view({name: 'Alice', salary: 1200});
@@ -51,7 +51,7 @@ describe('view', () => {
 
   test('Views nested property value correctly.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = empSalaryProp.view(emp);
 
     expect(res).toEqual(1450);
@@ -59,7 +59,7 @@ describe('view', () => {
 
   test('Views nested non-existent value as undefined.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount2');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount2');
     const res = empSalaryProp.view(emp);
 
     expect(res).toBeUndefined();
@@ -73,7 +73,7 @@ describe('view', () => {
         {amount: 1650, currency: 'AUD'},
       ],
     };
-    const emp2ndSalaryProp = P.newInstance<
+    const emp2ndSalaryProp = createPropper<
       TEmployeeWithMultipleSalaries,
       number
     >('salaries.1.amount');
@@ -90,7 +90,7 @@ describe('view', () => {
         {amount: 1650, currency: 'AUD'},
       ],
     };
-    const empSalaryProp = P.newInstance<TEmployeeWithMultipleSalaries, number>(
+    const empSalaryProp = createPropper<TEmployeeWithMultipleSalaries, number>(
       'salaries.2.amount'
     );
     const res = empSalaryProp.view(emp);
@@ -100,7 +100,7 @@ describe('view', () => {
 
   test('Views nested non-existent value as undefined.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.price.a');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.price.a');
     const res = empSalaryProp.view(emp);
 
     expect(res).toBeUndefined();
@@ -111,7 +111,7 @@ describe('view', () => {
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
     ];
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = emps.map(empSalaryProp.view);
 
     expect(res).toEqual([1450, 1200]);
@@ -121,7 +121,7 @@ describe('view', () => {
 describe('set', () => {
   test('Sets the value to the prop. Does not modify the original object.', () => {
     const emp = {name: 'Alice', salary: 1450};
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const res = empSalaryProp.set(1000)(emp);
@@ -138,7 +138,7 @@ describe('set', () => {
 
   test('Sets the value to the nested prop. Does not modify the original object.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = empSalaryProp.set(900)(emp);
 
     expect(res).toEqual({
@@ -153,7 +153,7 @@ describe('set', () => {
 
   test('Throws an error if attempts to set the value to a non-existent prop.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary2');
+    const empSalaryProp = createPropper<TEmployee, number>('salary2');
 
     expect(() => empSalaryProp.set(1000)(emp)).toThrow(/not found/);
 
@@ -165,7 +165,7 @@ describe('set', () => {
 
   test('Throws error if attempts to set the value to a non-existent nested prop.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.price');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.price');
 
     expect(() => empSalaryProp.set(1000)(emp)).toThrow(/not found/);
     expect(emp).toEqual({
@@ -179,7 +179,7 @@ describe('set', () => {
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
     ];
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = emps.map(empSalaryProp.set(800));
 
     expect(res).toEqual([
@@ -191,16 +191,16 @@ describe('set', () => {
 
 describe('NewInstance', () => {
   test('Throws an error if created with an empty accessProp string.', () => {
-    expect(() => P.newInstance<TEmployee, number>('')).toThrow(/not specified/);
+    expect(() => createPropper<TEmployee, number>('')).toThrow(/not specified/);
   });
 
   test('Throws an error if created with an empty accessProp array.', () => {
-    expect(() => P.newInstance<TEmployee, number>([])).toThrow(/not specified/);
+    expect(() => createPropper<TEmployee, number>([])).toThrow(/not specified/);
   });
 
   test('Accepts an array as accessProp path. Works for property name inaccessible by dot notation', () => {
     const emp = {name: 'Alice', 'salary.a': 1350};
-    const empSalaryProp = P.newInstance<
+    const empSalaryProp = createPropper<
       {name: string; 'salary.a': number},
       number
     >(['salary.a']);
@@ -218,7 +218,7 @@ describe('NewInstance', () => {
 
   test('Accepts an array for a nested accessProp path.', () => {
     const emp = {name: 'Alice', salary: {amount: 1550, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>([
+    const empSalaryProp = createPropper<TEmployee, number>([
       'salary',
       'amount',
     ]);
@@ -237,7 +237,7 @@ describe('NewInstance', () => {
 
 describe('evaluate', () => {
   test('Evaluates value correctly. Does not modify the original object.', () => {
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const emp = {
@@ -256,7 +256,7 @@ describe('evaluate', () => {
 
   test('Evaluates value correctly when an index argument is provided.', () => {
     const emp = {name: 'Alice', salary: 1200};
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const res = empSalaryProp.evaluate((x, i) => `${i}.${x}`)(emp, 10);
@@ -265,7 +265,7 @@ describe('evaluate', () => {
   });
 
   test('Evaluates a nested value correctly.', () => {
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = empSalaryProp.evaluate(x => x * 2)({
       name: 'Alice',
       salary: {amount: 1450, currency: 'AUD'},
@@ -275,7 +275,7 @@ describe('evaluate', () => {
   });
 
   test('Throws an error when evaluates the non-existent prop.', () => {
-    const empSalaryProp = P.newInstance<TEmployee, number>(
+    const empSalaryProp = createPropper<TEmployee, number>(
       'salary.amount.price'
     );
 
@@ -292,7 +292,7 @@ describe('evaluate', () => {
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
     ];
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = emps.map(empSalaryProp.evaluate(x => x > 1300));
 
     expect(res).toEqual([true, false]);
@@ -301,7 +301,7 @@ describe('evaluate', () => {
 
 describe('over', () => {
   test('Overs value correctly. Does not modify the original object.', () => {
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const emp1 = {name: 'Alice', salary: 1200};
@@ -313,7 +313,7 @@ describe('over', () => {
 
   test('Overs value correctly when an index argument is provided.', () => {
     const emp = {name: 'Alice', salary: 1200};
-    const empSalaryProp = P.newInstance<TEmployeeWithSimpleSalary, number>(
+    const empSalaryProp = createPropper<TEmployeeWithSimpleSalary, number>(
       'salary'
     );
     const res = empSalaryProp.over((x, i) => x + (i ? 10 * i : 0))(emp, 10);
@@ -323,7 +323,7 @@ describe('over', () => {
 
   test('Throws an error when overs to the non-existent prop.', () => {
     const emp = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary2');
+    const empSalaryProp = createPropper<TEmployee, number>('salary2');
 
     expect(() => empSalaryProp.over(x => x + 100)(emp)).toThrow(/not found/);
     expect(emp).toEqual({
@@ -333,7 +333,7 @@ describe('over', () => {
   });
 
   test('Overs a nested value correctly. Does not modify the original object.', () => {
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const emp1 = {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}};
     const emp2 = empSalaryProp.over(x => x * 2)(emp1);
 
@@ -352,7 +352,7 @@ describe('over', () => {
       {name: 'Alice', salary: {amount: 1450, currency: 'AUD'}},
       {name: 'Bob', salary: {amount: 1200, currency: 'AUD'}},
     ];
-    const empSalaryProp = P.newInstance<TEmployee, number>('salary.amount');
+    const empSalaryProp = createPropper<TEmployee, number>('salary.amount');
     const res = emps.map(empSalaryProp.over(x => x * 2));
 
     expect(res).toEqual([

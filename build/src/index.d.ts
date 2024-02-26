@@ -46,7 +46,7 @@ interface IPropper<TObj extends object, TProp> {
      */
     over<T extends TObj>(fn: (x: TProp, index?: number) => TProp): (y: T, index?: number) => T;
 }
-export default class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
+declare class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
     private accessPropPathStr;
     private accessPropPathElems;
     private constructor();
@@ -57,11 +57,12 @@ export default class Propper<TObj extends object, TProp> implements IPropper<TOb
      * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
      * @returns New Propper instance.
      */
-    static newInstance<TObj extends object, TProp>(accessPropPath: string | string[]): Propper<TObj, TProp>;
+    static createPropper<TObj extends object, TProp>(accessPropPath: string | string[]): Propper<TObj, TProp>;
     view: <T extends TObj>(obj: T) => TProp | undefined;
     private getAssertedAccessProp;
     set<T extends TObj>(value: TProp): (obj: T) => T;
     evaluate<T extends TObj, TResult>(fn: (x: TProp, index?: number) => TResult): (y: T, index?: number) => TResult;
     over<T extends TObj>(fn: (x: TProp, index?: number) => TProp): (obj: T, index?: number) => T;
 }
-export {};
+declare const _default: typeof Propper.createPropper;
+export default _default;
