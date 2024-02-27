@@ -51,7 +51,6 @@ Typescript / ES module:
 import createPropper from 'ts-propper';
 ```
 
-
 ## Example
 
 > **NOTE:** for a javascript example, see [js-example](./examples/js-example.js)
@@ -95,8 +94,6 @@ That _propper_ then serves for an arbitrary number of Circle instances.
 
 
 ```ts
-import createPropper from 'ts-propper';
-
 // Radius propper of a Circle type and its subtypes:
 //   Radius property has a name "r" and is of a type "number"
 const radiusPropper = createPropper<Circle, number>('r');
@@ -203,10 +200,10 @@ You can define a Propper of unknown property of an Object:
 const unknownPropper = createPropper<Circle, string>('notThere');
 ```
 
-The **view** methot of this Propper instance just returns _undefined_:
+The **safeView** method of this Propper instance just returns _undefined_:
 
 ```ts
-console.log('unknownPropper value:', unknownPropper.view(circ1));
+console.log('unknownPropper value:', unknownPropper.safeView(circ1));
 //=> unknownPropper value: undefined
 ```
 

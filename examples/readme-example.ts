@@ -135,8 +135,8 @@ console.log('big radius:', radiusPropper.evaluate(isValueBig)(circ1));
 
 const unknownPropper = createPropper<Circle, string>('notThere');
 
-// The view methot of this Propper instance just returns undefined:
-console.log('unknownPropper value:', unknownPropper.view(circ1));
+// The safeView method of this Propper instance just returns undefined:
+console.log('unknownPropper value:', unknownPropper.safeView(circ1));
 //=> unknownPropper value: undefined
 
 // However, Propper's other methods raise an Error:
