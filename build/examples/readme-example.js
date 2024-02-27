@@ -100,8 +100,8 @@ console.log('big radius:', radiusPropper.evaluate(isValueBig)(circ1));
 //=> big radius: false
 // You can define a Propper of unknown property of an Object:
 const unknownPropper = (0, index_1.default)('notThere');
-// The view methot of this Propper instance just returns undefined:
-console.log('unknownPropper value:', unknownPropper.view(circ1));
+// The safeView method of this Propper instance just returns undefined:
+console.log('unknownPropper value:', unknownPropper.safeView(circ1));
 //=> unknownPropper value: undefined
 // However, Propper's other methods raise an Error:
 // unknownPropper.set('something')(circ1);

@@ -9,12 +9,12 @@ class Propper {
     // TODO: add array string option
     // TODO: add empty accessPropPath check
     constructor(accessPropPath) {
-        this.view = (obj) => {
+        this.safeView = (obj) => {
             const res = (0, dlv_1.default)(obj, this.accessPropPathElems);
             return res;
         };
-        this.getAssertedAccessProp = (obj) => {
-            const p = this.view(obj);
+        this.view = (obj) => {
+            const p = this.safeView(obj);
             if (typeof p === 'undefined') {
                 throw new Error(`Property with key path [${this.accessPropPathStr}] not found at the object.`);
             }
@@ -35,7 +35,7 @@ class Propper {
     /**
      * Returns a new Propper instance.
      * @typeParam TObj - Object type in which we want to access a property.
-     * @typeParam TProp - Type of property we ant to access.
+     * @typeParam TPropType - Type of property we ant to access.
      * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
      * @returns New Propper instance.
      */
@@ -44,7 +44,7 @@ class Propper {
     }
     set(value) {
         return (obj) => {
-            this.getAssertedAccessProp(obj); // just an assertion
+            this.view(obj); // just an assertion
             // const newObj = { ...obj }; // we don't want a shallow copy
             const newObj = (0, klona_1.klona)(obj);
             const parentProp = (0, dlv_1.default)(newObj, this.accessPropPathElems.slice(0, -1));
@@ -55,13 +55,13 @@ class Propper {
     }
     evaluate(fn) {
         return (obj, index) => {
-            const x = this.getAssertedAccessProp(obj);
+            const x = this.view(obj);
             return fn(x, index);
         };
     }
     over(fn) {
         return (obj, index) => {
-            const x = this.getAssertedAccessProp(obj);
+            const x = this.view(obj);
             return this.set(fn(x, index))(obj);
         };
     }

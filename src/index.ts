@@ -18,9 +18,18 @@ interface IPropper<TObj extends object, TProp> {
    * Returns given object's access-property value.
    *
    * @param obj - An object whose access-property we want to read.
+   * @returns - Value of access-property.
+   * @throws - Error, if the object does not contain a property named after IPropper instance's access-property.
+   */
+  view<T extends TObj>(obj: T): TProp;
+
+  /**
+   * Returns given object's access-property value.
+   *
+   * @param obj - An object whose access-property we want to read.
    * @returns - Value of access-property. Undefined, if the object does not contain a property named after IPropper instance's access-property.
    */
-  view<T extends TObj>(obj: T): TProp | undefined;
+  safeView<T extends TObj>(obj: T): TProp | undefined;
 
   /**
    * Creates a deep copy of object, with its access-property new value.
@@ -57,7 +66,9 @@ interface IPropper<TObj extends object, TProp> {
   ): (y: T, index?: number) => T;
 }
 
-class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
+class Propper<TObj extends object, TPropType>
+  implements IPropper<TObj, TPropType>
+{
   private accessPropPathStr: string;
   private accessPropPathElems: string[];
 
@@ -79,23 +90,23 @@ class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
   /**
    * Returns a new Propper instance.
    * @typeParam TObj - Object type in which we want to access a property.
-   * @typeParam TProp - Type of property we ant to access.
+   * @typeParam TPropType - Type of property we ant to access.
    * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
    * @returns New Propper instance.
    */
-  static createPropper<TObj extends object, TProp>(
+  static createPropper<TObj extends object, TPropType>(
     accessPropPath: string | string[]
   ) {
-    return new Propper<TObj, TProp>(accessPropPath);
+    return new Propper<TObj, TPropType>(accessPropPath);
   }
 
-  view = <T extends TObj>(obj: T): TProp | undefined => {
+  safeView = <T extends TObj>(obj: T): TPropType | undefined => {
     const res = delve(obj, this.accessPropPathElems);
-    return res as TProp;
+    return res as TPropType;
   };
 
-  private getAssertedAccessProp = (obj: TObj): TProp => {
-    const p: TProp | undefined = this.view(obj);
+  view = (obj: TObj): TPropType => {
+    const p: TPropType | undefined = this.safeView(obj);
     if (typeof p === 'undefined') {
       throw new Error(
         `Property with key path [${this.accessPropPathStr}] not found at the object.`
@@ -104,9 +115,9 @@ class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
     return p;
   };
 
-  set<T extends TObj>(value: TProp) {
+  set<T extends TObj>(value: TPropType) {
     return (obj: T): T => {
-      this.getAssertedAccessProp(obj); // just an assertion
+      this.view(obj); // just an assertion
       // const newObj = { ...obj }; // we don't want a shallow copy
       const newObj = klona(obj);
       const parentProp = delve(newObj, this.accessPropPathElems.slice(0, -1));
@@ -118,17 +129,17 @@ class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
   }
 
   evaluate<T extends TObj, TResult>(
-    fn: (x: TProp, index?: number) => TResult
+    fn: (x: TPropType, index?: number) => TResult
   ): (y: T, index?: number) => TResult {
     return (obj: T, index?: number) => {
-      const x = this.getAssertedAccessProp(obj);
+      const x = this.view(obj);
       return fn(x, index);
     };
   }
 
-  over<T extends TObj>(fn: (x: TProp, index?: number) => TProp) {
+  over<T extends TObj>(fn: (x: TPropType, index?: number) => TPropType) {
     return (obj: T, index?: number): T => {
-      const x = this.getAssertedAccessProp(obj);
+      const x = this.view(obj);
       return this.set<T>(fn(x, index))(obj);
     };
   }
