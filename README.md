@@ -84,8 +84,15 @@ const circ2: Circle = {
 //
 ```
 
+Let's import the Propper package now:
+
+```ts
+import createPropper from 'ts-propper';
+```
+
 For every property of Circle type, we can create a _propper_.
 That _propper_ then serves for an arbitrary number of Circle instances.
+
 
 ```ts
 import createPropper from 'ts-propper';
