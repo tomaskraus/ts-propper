@@ -15,9 +15,17 @@ interface IPropper<TObj extends object, TProp> {
      * Returns given object's access-property value.
      *
      * @param obj - An object whose access-property we want to read.
+     * @returns - Value of access-property.
+     * @throws - Error, if the object does not contain a property named after IPropper instance's access-property.
+     */
+    view<T extends TObj>(obj: T): TProp;
+    /**
+     * Returns given object's access-property value.
+     *
+     * @param obj - An object whose access-property we want to read.
      * @returns - Value of access-property. Undefined, if the object does not contain a property named after IPropper instance's access-property.
      */
-    view<T extends TObj>(obj: T): TProp | undefined;
+    safeView<T extends TObj>(obj: T): TProp | undefined;
     /**
      * Creates a deep copy of object, with its access-property new value.
      *
@@ -46,23 +54,23 @@ interface IPropper<TObj extends object, TProp> {
      */
     over<T extends TObj>(fn: (x: TProp, index?: number) => TProp): (y: T, index?: number) => T;
 }
-declare class Propper<TObj extends object, TProp> implements IPropper<TObj, TProp> {
+declare class Propper<TObj extends object, TPropType> implements IPropper<TObj, TPropType> {
     private accessPropPathStr;
     private accessPropPathElems;
     private constructor();
     /**
      * Returns a new Propper instance.
      * @typeParam TObj - Object type in which we want to access a property.
-     * @typeParam TProp - Type of property we ant to access.
+     * @typeParam TPropType - Type of property we ant to access.
      * @param accessPropPath - Name of a property we want to access. Use dot notation (or array of keys) to specify a nested property.
      * @returns New Propper instance.
      */
-    static createPropper<TObj extends object, TProp>(accessPropPath: string | string[]): Propper<TObj, TProp>;
-    view: <T extends TObj>(obj: T) => TProp | undefined;
-    private getAssertedAccessProp;
-    set<T extends TObj>(value: TProp): (obj: T) => T;
-    evaluate<T extends TObj, TResult>(fn: (x: TProp, index?: number) => TResult): (y: T, index?: number) => TResult;
-    over<T extends TObj>(fn: (x: TProp, index?: number) => TProp): (obj: T, index?: number) => T;
+    static createPropper<TObj extends object, TPropType>(accessPropPath: string | string[]): Propper<TObj, TPropType>;
+    safeView: <T extends TObj>(obj: T) => TPropType | undefined;
+    view: (obj: TObj) => TPropType;
+    set<T extends TObj>(value: TPropType): (obj: T) => T;
+    evaluate<T extends TObj, TResult>(fn: (x: TPropType, index?: number) => TResult): (y: T, index?: number) => TResult;
+    over<T extends TObj>(fn: (x: TPropType, index?: number) => TPropType): (obj: T, index?: number) => T;
 }
 declare const _default: typeof Propper.createPropper;
 export default _default;
